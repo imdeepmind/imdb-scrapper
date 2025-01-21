@@ -106,4 +106,5 @@ Ensure Docker is installed on your system.
 - **Unit Tests**: Unit tests are not included due to time constraints. However, the APIs have been manually tested for functionality.
 - **Future Improvements**: Migrating to a more robust database and implementing asynchronous scraping would enhance scalability and reliability.
 - **Timeout Issue**: When scrapping, keep the `max_pages` very small. Otherwise scrapping process might take long time and cause a timeout issue.
+- **sqlite**: I have added one sqlite file in the repo with several scrapped movies so testing the APIs can easily be done.
 
