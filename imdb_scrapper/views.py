@@ -31,7 +31,6 @@ class MovieScrapAPI(APIView):
                 {"error": "Missing required parameters: query, or max_pages"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-            
 
         try:
             max_pages = int(max_pages)
@@ -39,21 +38,21 @@ class MovieScrapAPI(APIView):
             return Response(
                 {
                     "error": "Invalid parameter type",
-                    "details": "max_pages must be a number"
+                    "details": "max_pages must be a number",
                 },
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
             )
-        
+
         # Validate max_pages range
         if not (max_pages > 0 and max_pages <= 10):
             return Response(
                 {
                     "error": "Invalid parameter value",
-                    "details": "max_pages must be between 1 and 10"
+                    "details": "max_pages must be between 1 and 10",
                 },
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
             )
-        
+
         try:
             from .scrapper import (
                 IMDbScraper,
@@ -64,7 +63,7 @@ class MovieScrapAPI(APIView):
             movies_data: List[MovieDetails] = scrapper.search_and_get_details(
                 query, max_pages
             )
-            
+
             duplicate_movies = []
 
             # Use transaction to ensure data consistency
@@ -84,7 +83,7 @@ class MovieScrapAPI(APIView):
 
                     if created:
                         movies_added += 1
-                    
+
                     if not created:
                         duplicate_movies.append(movie_detail.title)
 
@@ -113,7 +112,7 @@ class MovieScrapAPI(APIView):
                 {
                     "message": f"Successfully stored {movies_added} new movies",
                     "total_scraped": len(movies_data),
-                    "duplicate_movies": duplicate_movies
+                    "duplicate_movies": duplicate_movies,
                 },
                 status=status.HTTP_201_CREATED,
             )
@@ -131,6 +130,7 @@ class MovieListAPI(generics.ListAPIView):
     serializer_class = MovieSerializer
     pagination_class = MoviePagination
     queryset = Movie.objects.all().order_by("-release_year", "title")
+
 
 class MovieSearchAPI(generics.ListAPIView):
     """API to search movies by multiple criteria."""

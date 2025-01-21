@@ -18,16 +18,17 @@ def make_get_request(url: str):
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
     }
-    
+
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()  # Raise an exception for HTTP errors
-        
+
         return response.text
     except requests.exceptions.RequestException as e:
         raise Exception("Failed to connect with IMDB server")
     except Exception as e:
         raise Exception("Something went wrong the server!!!")
+
 
 # Configure logging
 logging.basicConfig(
@@ -284,6 +285,7 @@ class IMDbMovieListScraper:
             logger.error(f"Failed to get movie links: {e}")
             return None
 
+
 class IMDbScraper:
     """Main class that combines movie list and detail scraping functionality."""
 
@@ -301,7 +303,9 @@ class IMDbScraper:
         self._max_workers = max_workers
 
     def search_and_get_details(
-        self, query: str, max_pages: int = 1,
+        self,
+        query: str,
+        max_pages: int = 1,
     ) -> List[MovieDetails]:
         """
         Search for movies and get detailed information for each result using multiple threads.
@@ -314,7 +318,7 @@ class IMDbScraper:
             List of MovieDetails objects
         """
         movie_links = self._list_scraper.get_movie_links(query, max_pages)
-        
+
         if not movie_links:
             logger.warning("No movie links found")
             return []
@@ -335,7 +339,7 @@ class IMDbScraper:
                 try:
                     details = future.result()
                     if details:
-                        logger.info(f'Successfully scraped movie details')
+                        logger.info(f"Successfully scraped movie details")
                         movie_details.append(details)
                         successful += 1
                     else:
