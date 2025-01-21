@@ -73,7 +73,6 @@ class MovieScrapAPI(APIView):
 
                 for movie_detail in movies_data:
                     # Create or get the movie
-                    # TODO: Need to check
                     movie, created = Movie.objects.get_or_create(
                         title=movie_detail.title,
                         defaults={
