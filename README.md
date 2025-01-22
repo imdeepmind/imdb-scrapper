@@ -98,6 +98,7 @@ Ensure Docker is installed on your system.
 
 - **SQLite Database**: The project uses SQLite, which is suitable for small-scale applications but not ideal for production-grade systems.
 - **Scraping on API Call**: Scraping is triggered directly via the Scrape API, which may cause timeout issues for large datasets. A queue service like RabbitMQ or Celery would be better for handling this asynchronously, but it is beyond the scope of this assignment.
+- **No movie id**: I'm not scrapping any ID for the movie. Because of this, I'm using the name of the movie to detect unique movie names. This is not ideal as there could be two movies with same name.
 
 
 

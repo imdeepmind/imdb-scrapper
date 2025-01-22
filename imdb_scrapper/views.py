@@ -72,6 +72,7 @@ class MovieScrapAPI(APIView):
 
                 for movie_detail in movies_data:
                     # Create or get the movie
+                    # TODO: Instead of using movie name to detect duplicate movies, I should collect some id from imdb and use that
                     movie, created = Movie.objects.get_or_create(
                         title=movie_detail.title,
                         defaults={
